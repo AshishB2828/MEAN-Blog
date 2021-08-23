@@ -22,6 +22,7 @@ app.use(cors({
 app.use(bodyParser.json())
 app.use(express.static(__dirname + '/client/dist/client'))
 app.use('/auth', authentication)
+app.use('/user', require('./routes/userRouters'))
 
 
 app.get('*', (req, res) => {

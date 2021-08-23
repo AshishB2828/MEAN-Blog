@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, } from '@angular/common/http'
-import { map } from "rxjs/operators"; 
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Observable } from 'rxjs';
-import { RegResponse } from '../components/models/regRes.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +8,26 @@ import { RegResponse } from '../components/models/regRes.model';
 export class AuthService {
   
   domain: string = "http://localhost:8000"
-  authToken:string = ""
-  user:string = ""
+  authToken:any = ""
+  user:any = ""
+  options:any;
 
   constructor(private http:HttpClient) { }
+
+  createAuthenticationHeader(){
+    this.getToken();
+    
+    return new HttpHeaders({
+      authorization:'Bearer '+this.authToken,
+      "Content-Type": "application/json; charset=UTF-8"
+    })
+  }
+
+  getToken(){
+    this.authToken = localStorage.getItem('token')||''
+    
+
+  }
 
   registerUser(user:any):Observable<any>{
 
@@ -26,7 +40,7 @@ export class AuthService {
     
   }
   isEmailAvailable(email:any):Observable<any>{
-    console.log(email)
+   
     return this.http.get(`${this.domain}/auth/checkemail/${email}`, )
     
   }
@@ -35,6 +49,23 @@ export class AuthService {
     return this.http.post(`${this.domain}/auth/login`, user)
   }
 
+  getProfile():Observable<any>{
+   return this.http.get(`${this.domain}/user/profile`, {headers: this.createAuthenticationHeader()})
+  }
+
+  logOut(){
+    this.authToken =null
+    this.user =null
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
+  }
+
+  loggedIn(){
+    
+    let token = localStorage.getItem('token')
+    if(!token) return false
+    return true
+  }
   storeUserData(token:any, user:any){
     localStorage.setItem('token', token)
     localStorage.setItem('user', JSON.stringify(user))

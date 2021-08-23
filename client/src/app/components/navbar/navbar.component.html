@@ -7,7 +7,7 @@
                 </button>
             </div>
 
-            <a routerLink="/home" class="navbar-brand">Blogify</a>
+            <a routerLink="/" class="navbar-brand">Blogify</a>
             <div class="navbar-collapse collapse" id="navbar">
                 <ul class="nav navbar-nav navbar-left">
                     <li 
@@ -16,28 +16,39 @@
                     ><a routerLink="/home"class="">Home</a></li>
                 </ul>
                 <ul class="nav navbar-right navbar-nav">
-                <li 
+                <li *ngIf="authService.loggedIn()"
                     [routerLinkActive]="['active']" 
                     [routerLinkActiveOptions]="{exact:true}"
                     ><a routerLink="/dashboard">DashBoard</a>
                 </li>
 
                      <li><a href="">Contact</a></li>
-                     <li><a href="">Profile</a></li>
+
+                     <li *ngIf= "authService.loggedIn()"
+                     [routerLinkActive]="['active']" 
+                    [routerLinkActiveOptions]="{exact:true}">
+                         <a routerLink="/profile">Profile</a>
+                    </li>
+
                      <li><a href="">Blog</a></li>
 
-                     <li
+                     <li *ngIf= "!authService.loggedIn()"
                      [routerLinkActive]="['active']" 
                      [routerLinkActiveOptions]="{exact:true}">
                         <a routerLink='/login'>Login</a>
                     </li>
 
-                     <li>
-                        <a href="">Logout</a>
+                     <li
+                     *ngIf= "authService.loggedIn()"
+                     [routerLinkActive]="['active']" 
+                     [routerLinkActiveOptions]="{exact:true}"
+                     style="cursor:pointer;"
+                     >
+                        <a (click)="onLogOut()">Logout</a>
                     </li>
 
 
-                     <li 
+                     <li *ngIf= "!authService.loggedIn()"
                      [routerLinkActive]="['active']" 
                      [routerLinkActiveOptions]="{exact:true}">
                         <a routerLink='/register'>Register</a>
