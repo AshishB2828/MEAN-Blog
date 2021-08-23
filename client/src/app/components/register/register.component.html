@@ -1,0 +1,128 @@
+<h1 class="page-header">Register</h1>
+
+    <div class="row show-hide-message">
+        <div [ngClass]="messageClass">
+            {{ message }}
+        </div>
+    </div>
+
+<form [formGroup]="form" (submit)="onRegisetrSubmit()">
+
+    <div class="form-group">
+        <div
+            *ngIf="!usernameValid">
+                {{usernameMsg}}
+            </div>
+        <label for="username">Username</label>
+        <div class="">
+            <input 
+            type="text" name="username" 
+            class="form-control" 
+            autocomplete="off" 
+            placeholder="Username"
+            formControlName="username"
+            (blur)="checkUsernameAvailable()">
+        </div>
+        <div 
+        *ngIf ="(form.controls.username.errors && form.controls.username.touched) || !usernameValid"
+        class="alert alert-danger">
+            <li 
+            *ngIf ="form.controls.username.errors?.required && form.controls.username.touched"
+            >This field is required</li>
+            <li 
+            *ngIf ="form.controls.username.errors?.minlength|| form.controls.username.errors?.maxlength"
+            >Minimum character 2 amd maximum length 30</li>
+            <li
+            *ngIf="form.controls.username.errors?.validateUserName">
+                user name contains specialcharacters
+            </li>
+            
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div
+        *ngIf="emailValid">
+            {{emailMsg}}
+        </div>
+        <label for="email">Email</label>
+        <div class="">
+            <input 
+            type="email" 
+            name="email" 
+            class="form-control" 
+            autocomplete="off" 
+            placeholder="Email"
+            formControlName="email"
+            (blur)="checkEmailAvailabile()">
+        </div>
+        <div 
+        *ngIf ="(form.controls.email.errors && form.controls.email.touched)|| !emailValid"
+        class="alert alert-danger">
+            <li 
+            *ngIf ="form.controls.email.errors?.required && form.controls.email.touched"
+            >This field is required</li>
+            <li 
+            *ngIf ="form.controls.email.errors?.minlength|| form.controls.email.errors?.maxlength"
+            >Minimum character 5 amd maximum length 30</li>
+            <li
+            *ngIf="form.controls.email.errors?.validateEmail">
+                Enter a valid email address
+            </li> 
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="password">Password</label>
+        <div class="">
+            <input 
+            type="password" 
+            name="password" 
+            class="form-control" 
+            autocomplete="off" 
+            placeholder="password"
+            formControlName="password">
+        </div>
+        <div 
+        *ngIf ="form.controls.password.errors && form.controls.password.touched"
+        class="alert alert-danger">
+            <li 
+            *ngIf ="form.controls.password.errors?.required && form.controls.password.touched"
+            >This field is required</li>
+            <li 
+            *ngIf ="form.controls.password.errors?.minlength|| form.controls.password.errors?.maxlength"
+            >Minimum character 5 amd maximum length 30</li>
+            
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="confirm ">confirm password</label>
+        <div class="">
+            <input 
+            type="password" 
+            name="confirm" 
+            class="form-control" 
+            autocomplete="off" 
+            placeholder="confirm password"
+            formControlName="confirm">
+            
+        </div>
+        <div 
+        *ngIf ="form.controls.confirm.errors?.required && form.controls.confirm.touched"
+        class="alert alert-danger">
+            <li 
+            *ngIf ="form.controls.confirm.errors?.required && form.controls.confirm.touched">
+            This field is required</li>
+        </div>
+        <div
+        class="alert alert-danger"
+        *ngIf ="form.errors?.matchingPasswords && form.controls.confirm.touched">
+            password do not match
+        </div>
+    </div>
+
+    <input type="submit" [disabled] ="!form.valid || processing ||!emailValid || !usernameValid" 
+    value="Submit" class="btn btn-primary">
+
+</form>
