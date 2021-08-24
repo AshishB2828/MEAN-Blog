@@ -23,6 +23,7 @@ app.use(bodyParser.json())
 app.use(express.static(__dirname + '/client/dist/client'))
 app.use('/auth', authentication)
 app.use('/user', require('./routes/userRouters'))
+app.use('/blogs', require('./routes/blogRouters'))
 
 
 app.get('*', (req, res) => {

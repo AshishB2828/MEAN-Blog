@@ -11,6 +11,7 @@ export class AuthService {
   authToken:any = ""
   user:any = ""
   options:any;
+  username:any
 
   constructor(private http:HttpClient) { }
 
@@ -23,7 +24,7 @@ export class AuthService {
     })
   }
 
-  getToken(){
+  private getToken(){
     this.authToken = localStorage.getItem('token')||''
     
 
@@ -52,7 +53,6 @@ export class AuthService {
   getProfile():Observable<any>{
    return this.http.get(`${this.domain}/user/profile`, {headers: this.createAuthenticationHeader()})
   }
-
   logOut(){
     this.authToken =null
     this.user =null

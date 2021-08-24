@@ -30,7 +30,11 @@
                          <a routerLink="/profile">Profile</a>
                     </li>
 
-                     <li><a href="">Blog</a></li>
+                     <li *ngIf= "authService.loggedIn()"
+                     [routerLinkActive]="['active']" 
+                     [routerLinkActiveOptions]="{exact:true}">
+                         <a routerLink="/blog">Blog</a>
+                    </li>
 
                      <li *ngIf= "!authService.loggedIn()"
                      [routerLinkActive]="['active']" 

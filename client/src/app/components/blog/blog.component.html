@@ -1,0 +1,147 @@
+<div class="page-header">Blog Feed</div>
+
+<div class="row show-hide-message">
+    <div [ngClass]="messageClass" *ngIf="message && newPost">
+        {{message}}
+    </div>
+</div>
+
+<button type="button" name="button" class="btn btn-warning M-2" *ngIf="!newPost" (click)="newBlogForm()">New Post</button>
+<button [disabled] ="loadingBlogs" type="button" name="button" class="btn btn-light M-2" (click)="relaodForm()">Reload</button>
+<br/>
+<br/>
+
+<!-- blog form -->
+    <form 
+    *ngIf="newPost"
+    [formGroup]="form" name="blogForm" (submit)="onBlogSubmit()">
+        <div class="form-group">
+            <label for="title">Title</label>
+            <div>
+                <input 
+                type="text" 
+                name="title" 
+                placeholder="Title" 
+                class="form-control" 
+                autocomplete="off"
+                formControlName="title">
+            </div>
+            <div 
+            class="alert alert-danger"
+            *ngIf="form.controls.title.touched && form.controls.title.errors">
+                This feild is required
+            </div>
+        </div>
+        
+        <label for="body">Body</label>
+        <div class="form-group">
+            <div class="position-relative">
+                <textarea 
+                rows="8"
+                cols="80" 
+                name="body" 
+                placeholder="body" 
+                class="form-control" 
+                formControlName="body"
+                >
+            </textarea>
+            <p class="position-absolute">
+                {{form.get('body')?.value.length}}/{{totalLength}}
+            </p>
+        </div>
+        <div 
+        class="alert alert-danger"
+        *ngIf="form.controls.body.touched && form.controls.body.errors">
+        This feild is required
+    </div>
+        </div>
+    <div class="form-group">
+        <label for="images">Image Url</label>
+        <div>
+            <input 
+            type="text" 
+            name="images" 
+            placeholder="images" 
+            class="form-control" 
+            autocomplete="off"
+            formControlName="images">
+        </div>
+       
+    </div>
+        <button [disabled]="processing" type="button" name="button" (click)="goBack()" class="btn btn-warning M-2">Go Back</button>
+        <button [disabled]="processing || !form.valid" type="submit" name="button" class="btn btn-success M-2">Create</button>
+
+    </form>
+
+<div *ngIf="!newPost">
+
+
+<div 
+*ngFor ="let blog of blogPosts"
+style="padding-top:5px !important;">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-tittle ">{{blog?.title}}</h3>
+        </div>
+        <div class="img" *ngIf="blog?.images?.length">
+            <img src="{{blog?.images}}" class="img-fluid" alt="Responsive image">
+        </div>
+        <div class="panel-body">
+          {{blog?.body}}
+        </div>
+        <div class="panel-footer">
+            <p><strong>Posted By: </strong>{{blog?.createdBy}}</p>
+            <p><strong>Date : </strong>{{blog?.createdAt | date:'MMM dd,yyyy'}}</p>
+            <div *ngIf="blog.createdBy !== user.username">
+                <p><strong>Likes:</strong>{{blog?.likes}}</p>
+                <p><strong>Dislikes:</strong>{{blog?.Dislikes}}</p>
+            </div>
+            <a [routerLink]="['/edit-blog/', blog._id]" *ngIf="blog.createdBy !== user.username">
+                <button type="button" name="button" class="btn btn-sm btn-info M-2">
+                <i class="fas fa-pen"></i>  Edit
+            </button></a>
+
+            <a [routerLink]="['/delete-blog/', blog._id]" *ngIf="blog.createdBy !== user.username">
+                <button type="button" name="button" class="btn btn-sm btn-danger M-2">
+                <i class="fas fa-trash-alt"></i> Delete
+            </button></a>
+            
+            <div class="dropdown">
+                <button type="button" name="button" class="btn btn-sm btn-success M-2">
+                    <i class="far fa-thumbs-up"></i> <span>Likes: 21</span>
+                </button>
+                <div class="dropdown-content">
+                    <a href="#">Ashish</a>
+                    <a href="#">Patel</a>
+                    <a href="#">Ram</a>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <button type="button" name="button" class="btn btn-sm btn-warning M-2">
+                    <i class="far fa-thumbs-down"></i>  <span>Dislikes: 21</span>
+                </button>
+                <div class="dropdown-content">
+                    <a href="#">Ashish</a>
+                    <a href="#">Patel</a>
+                    <a href="#">Ram</a>
+                </div>
+            </div>
+
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <button type="button" name="button" class="btn btn-sm btn-info M-2" (click)="createComment()">
+                        Post Comment
+                    </button>
+                    <br/>
+                    <!-- <form >
+                        <textarea name="comment" id="" cols="30" rows="10" class="form-control"></textarea>
+                        <button type="submit" name="button" class="btn btn-sm btn-info M-2">Submit Post</button>
+                        <button type="submit" name="button" class="btn btn-sm btn-danger">cancel</button>
+                    </form> -->
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div>

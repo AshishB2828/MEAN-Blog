@@ -8,12 +8,13 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { RegisterComponent } from './components/register/register.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './components/login/login.component';
 import { ProfileComponent } from './components/profile/profile.component';
-import {JwtModule, JwtHelperService} from '@auth0/angular-jwt'
+import {JwtModule, JwtHelperService} from '@auth0/angular-jwt';
+import { BlogComponent } from './components/blog/blog.component'
 
 @NgModule({
   declarations: [
@@ -23,15 +24,17 @@ import {JwtModule, JwtHelperService} from '@auth0/angular-jwt'
     DashboardComponent,
     RegisterComponent,
     LoginComponent,
-    ProfileComponent
+    ProfileComponent,
+    BlogComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    FormsModule,
     HttpClientModule,
     FlashMessagesModule.forRoot(),
-    JwtModule
+    JwtModule,
   ],
   providers: [AuthService, JwtHelperService],
   bootstrap: [AppComponent]
