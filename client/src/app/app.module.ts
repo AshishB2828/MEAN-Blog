@@ -14,7 +14,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './components/login/login.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import {JwtModule, JwtHelperService} from '@auth0/angular-jwt';
-import { BlogComponent } from './components/blog/blog.component'
+import { BlogComponent } from './components/blog/blog.component';
+import { EditBlogComponent } from './components/edit-blog/edit-blog.component'
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { BlogComponent } from './components/blog/blog.component'
     RegisterComponent,
     LoginComponent,
     ProfileComponent,
-    BlogComponent
+    BlogComponent,
+    EditBlogComponent
   ],
   imports: [
     BrowserModule,

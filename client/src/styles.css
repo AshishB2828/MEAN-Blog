@@ -1,1 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
+
+.mX-2{
+    margin: 0 2px !important;
+}
+.my-2{
+    margin: 2px 0 !important;
+}
+.M-2{
+    margin: 2px;
+}
+.position-absolute{
+    position: absolute;
+    right: 0px !important;
+    color:red;
+}
+.position-relative{
+    position: relative;
+}
+.img-fluid{
+    width: 100%;
+    height: 200px;
+    padding: 2px 
+}
+.img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}

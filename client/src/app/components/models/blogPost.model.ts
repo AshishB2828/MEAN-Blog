@@ -2,7 +2,7 @@ export class BlogPost{
         _id:any
         title:string =''
         body:string =''
-        images=[]
+        images:Array<any>=[]
         createdBy:string =''
         createdAt:string =''
         likedBy=[]

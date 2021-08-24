@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { BlogPost } from '../components/models/blogPost.model';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -18,5 +19,13 @@ export class BlogService {
 
   getAllBlogs():Observable<any>{
     return this.http.get(`${this.domain}/blogs/all`, {headers:this.auth.createAuthenticationHeader()})
+  }
+
+  getCurrentBlog(id:any):Observable<any>{
+    return this.http.get(`${this.domain}/blogs/current/${id}`, {headers:this.auth.createAuthenticationHeader()})
+  }
+
+  updateBlog(blog:BlogPost):Observable<any>{
+    return this.http.put(`${this.domain}/blogs/update`, blog, {headers:this.auth.createAuthenticationHeader()})
   }
 }
