@@ -45,4 +45,8 @@ export class BlogService {
     return this.http.put(`${this.domain}/blogs/comment`,comments, {headers:this.auth.createAuthenticationHeader()})
 
   }
+
+  getAllBlogsById(id:any):Observable<any>{
+    return this.http.get(`${this.domain}/blogs/${id}/all`, {headers:this.auth.createAuthenticationHeader()})
+  }
 }

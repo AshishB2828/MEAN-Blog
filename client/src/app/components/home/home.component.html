@@ -1,1 +1,100 @@
-<p>home works!</p>
+<h1 class="page-header">Blog Feed</h1>
+
+<div class="row show-hide-message">
+    <div [ngClass]="messageClass" *ngIf="message && newPost">
+        {{message}}
+    </div>
+</div>
+
+<button [disabled] ="loadingBlogs" type="button" name="button" class="btn btn-light M-2" (click)="relaodForm()">Reload</button>
+<br/>
+<br/>
+
+
+
+<div>
+
+
+<div 
+*ngFor ="let blog of blogPosts"
+style="padding-top:5px !important;">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-tittle ">{{blog?.title}}</h3>
+        </div>
+        <div class="img" *ngIf="blog?.images?.length">
+            <img src="{{blog?.images}}" class="img-fluid" alt="Responsive image">
+        </div>
+        <div class="panel-body">
+          {{blog?.body}}
+        </div>
+        <div class="panel-footer">
+            <a [routerLink]="['/profile/',blog?.uid]"><strong>Posted By: </strong>{{blog?.createdBy}}</a>
+            <p><strong>Date : </strong>{{blog?.createdAt | date:'MMM dd,yyyy'}}</p>
+        <div  style="display: flex">
+            <a [routerLink]="['/edit-blog/', blog._id]" *ngIf="blog.createdBy === user.username">
+                <button type="button" name="button" class="btn btn-sm btn-info M-2">
+                <i class="fas fa-pen"></i>  Edit
+            </button></a>
+
+            <a [routerLink]="['/delete-blog/', blog._id]" *ngIf="blog.createdBy === user.username">
+                <button type="button" name="button" class="btn btn-sm btn-danger M-2">
+                <i class="fas fa-trash-alt"></i> Delete
+            </button></a>
+            
+            <div class="dropdown">
+                <button type="button" name="button" class="btn btn-sm btn-success M-2" 
+                [disabled]="blog.likedBy.includes(user._id)"
+                (click)="likeBlog(blog._id)">
+                    <i class="far fa-thumbs-up"></i> <span>Likes: {{blog.likedBy.length}}</span>
+                </button>
+            </div>
+
+            <div class="dropdown">
+                <button type="button" name="button" class="btn btn-sm btn-warning M-2" 
+                [disabled]="blog.DislikedBy.includes(user._id)"
+                (click)="dislikeBlog(blog._id)">
+                    <i class="far fa-thumbs-down"></i>  <span>Dislikes: {{blog.DislikedBy.length}}</span>
+                </button>
+            </div>
+        </div>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <button type="button" name="button" class="btn btn-sm btn-info M-2" 
+                    [disabled]="newComment.indexOf(blog._id)>-1"
+                    (click)="draftComment(blog._id)">
+                        Post Comment
+                    </button>
+                    <br/>
+                   <div *ngIf="newComment.indexOf(blog._id)>-1">
+                    <form >
+                        
+                        <textarea name="comment" id="" cols="30" rows="10" class="form-control" [(ngModel)]="comment"></textarea>
+                        <button [disabled]="comment.length === 0 || processing" (click)="createComment(blog._id)"
+                        type="submit" name="button" class="btn btn-sm btn-info M-2">Submit</button>
+                        <button [disabled]="processing" type="submit" name="button" 
+                        class="btn btn-sm btn-danger" (click)="cancelComment(blog._id)">cancel</button>
+                    </form>
+                   </div>
+                   <div 
+                   *ngIf="enabledComments.indexOf(blog._id)===-1 && blog.comments.length>0"
+                   class="list-group-item">
+                        <span (click)="expandComments(blog._id)" style="cursor:pointer;">Show Comments&nbsp;&nbsp;</span>
+                   </div>
+                   <div 
+                   *ngIf="enabledComments.indexOf(blog._id)>-1 && blog.comments.length>0"
+                   class="list-group-item">
+                        <span (click)="collapseComments(blog._id)" style="cursor:pointer;">Hide Comments&nbsp;&nbsp;</span>
+                   </div>
+                   <div 
+                   *ngIf="enabledComments.indexOf(blog._id)>-1">
+                    <li *ngFor="let comment of blog.comments" class="list-group-item">
+                        <strong>{{comment.commentator}}: </strong> {{comment.comment}}
+                    </li>
+                   </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div>

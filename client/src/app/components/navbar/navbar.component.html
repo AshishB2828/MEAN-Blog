@@ -2,12 +2,10 @@
   <nav class="navbar navbar-default">
       <div class="container">
             <div class="navbar-header">
-              <button class="navbar-toggle collapsed">
-                <span class="sr-only"></span>
-                </button>
+              
             </div>
 
-            <a routerLink="/" class="navbar-brand">Blogify</a>
+            <a routerLink="/" class="navbar-brand">BlogTime</a>
             <div class="navbar-collapse collapse" id="navbar">
                 <ul class="nav navbar-nav navbar-left">
                     <li 
@@ -19,15 +17,13 @@
                 <li *ngIf="authService.loggedIn()"
                     [routerLinkActive]="['active']" 
                     [routerLinkActiveOptions]="{exact:true}"
-                    ><a routerLink="/dashboard">DashBoard</a>
+                    ><a target=”_blank” href="https://github.com/AshishB2828?tab=repositories">github</a>
                 </li>
-
-                     <li><a href="">Contact</a></li>
 
                      <li *ngIf= "authService.loggedIn()"
                      [routerLinkActive]="['active']" 
                     [routerLinkActiveOptions]="{exact:true}">
-                         <a [routerLink]="['/profile/',userId]">Profile</a>
+                         <a [routerLink]="['/profile']">Profile</a>
                     </li>
 
                      <li *ngIf= "authService.loggedIn()"

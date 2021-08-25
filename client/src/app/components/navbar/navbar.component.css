@@ -1,0 +1,12 @@
+
+@media (max-width: 766px){
+   
+   .navbar-collapse.collapse{
+        display: flex !important; 
+        justify-content: space-between !important;  
+   }
+   .navbar-right{
+       display: flex !important;
+       
+   }
+}

@@ -3,6 +3,7 @@ const auth = require('../middlewares/auth');
 const router = require('express').Router()
 
     router.get('/all', blogCtrl.getAllBlogs)
+    router.get('/:id/all', blogCtrl.getAllBlogsById)
     router.post('/newblog',auth, blogCtrl.createNewBlog)
     router.get('/current/:id',auth, blogCtrl.getBlogById)
     router.put('/update',auth, blogCtrl.updateBlogById)

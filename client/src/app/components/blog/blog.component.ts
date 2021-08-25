@@ -35,8 +35,8 @@ export class BlogComponent implements OnInit {
   }
   
   ngOnInit(): void {
-    this.getAllBlogs()
     this.user =JSON.parse(localStorage.getItem('user') || '{}')
+    this.getAllBlogs(this.user._id)
   }
 
   newBlogForm(){
@@ -45,7 +45,7 @@ export class BlogComponent implements OnInit {
 
   relaodForm(){
     this.loadingBlogs =true
-    this.getAllBlogs()
+    this.getAllBlogs(this.user._id)
     setTimeout(()=>{
       this.loadingBlogs = false;
     },4000)
@@ -84,8 +84,8 @@ export class BlogComponent implements OnInit {
     )
   }
 
-  getAllBlogs(){
-    this.blogService.getAllBlogs().subscribe(
+  getAllBlogs(id:any){
+    this.blogService.getAllBlogsById(id).subscribe(
       data=>{
         this.blogPosts = data.blogs 
         console.log(this.blogPosts)
@@ -95,7 +95,7 @@ export class BlogComponent implements OnInit {
   }
   likeBlog(id:any){
     this.blogService.likeBlog(id).subscribe(data=>{
-      this.getAllBlogs()
+      this.getAllBlogs(this.user._id)
     },
     error=>{
       console.log(error)
@@ -103,7 +103,7 @@ export class BlogComponent implements OnInit {
   }
   dislikeBlog(id:any){
     this.blogService.disLikeBlog(id).subscribe(data=>{
-      this.getAllBlogs()
+      this.getAllBlogs(this.user._id)
     },
     error=>{
       console.log(error)
@@ -114,7 +114,7 @@ export class BlogComponent implements OnInit {
     this.processing =true
     this.blogService.postComment(id, this.comment).subscribe(
       data=>{
-      this.getAllBlogs()
+      this.getAllBlogs(this.user._id)
       const index =this.newComment.indexOf(id)
       this.newComment.splice(index,1)
       this.comment=""

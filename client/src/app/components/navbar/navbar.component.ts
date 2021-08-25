@@ -21,6 +21,7 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.loggedInUser =JSON.parse(localStorage.getItem('user') || '{}')
     this.userId = this.loggedInUser._id
+    console.log(this.userId)
   }
   onLogOut(){
     this.authService.logOut()

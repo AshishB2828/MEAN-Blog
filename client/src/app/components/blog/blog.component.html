@@ -92,10 +92,7 @@ style="padding-top:5px !important;">
         <div class="panel-footer">
             <a [routerLink]="['/profile/',blog?.uid]"><strong>Posted By: </strong>{{blog?.createdBy}}</a>
             <p><strong>Date : </strong>{{blog?.createdAt | date:'MMM dd,yyyy'}}</p>
-            <div *ngIf="blog.createdBy !== user.username">
-                <p><strong>Likes:</strong>{{blog?.likes}}</p>
-                <p><strong>Dislikes:</strong>{{blog?.Dislikes}}</p>
-            </div>
+            
             <a [routerLink]="['/edit-blog/', blog._id]" *ngIf="blog.createdBy === user.username">
                 <button type="button" name="button" class="btn btn-sm btn-info M-2">
                 <i class="fas fa-pen"></i>  Edit

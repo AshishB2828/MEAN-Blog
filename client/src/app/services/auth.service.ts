@@ -54,10 +54,10 @@ export class AuthService {
    return this.http.get(`${this.domain}/user/profile/${id}`, {headers: this.createAuthenticationHeader()})
   }
   logOut(){
-    this.authToken =null
-    this.user =null
     localStorage.removeItem('token')
     localStorage.removeItem('user')
+    this.authToken =null
+    this.user =null
   }
 
   loggedIn(){

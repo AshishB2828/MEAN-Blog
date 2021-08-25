@@ -11,6 +11,14 @@ const blogCtrl ={
             return res.status(500).send({success:false, message:error.message})
         }
     },
+    getAllBlogsById: async(req, res)=>{
+        try {
+            const blogs = await Blog.find({uid:req.params.id}).sort("-createdAt")
+            res.send({blogs, success:true})
+        } catch (error) {
+            return res.status(500).send({success:false, message:error.message})
+        }
+    },
     createNewBlog: async(req, res)=>{
 
         const {title, body, images} = req.body

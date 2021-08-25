@@ -3,7 +3,6 @@ const User = require('../models/User')
 const userCtrl ={
 
     getProfile: async(req, res)=>{
-        // console.log(req.params)
         try {
             const user = await User.findOne({_id:req.params.id}).select("-password")
             if(user) return res.status(200).send({user, success:true})

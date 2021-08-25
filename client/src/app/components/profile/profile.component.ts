@@ -21,6 +21,7 @@ export class ProfileComponent implements OnInit {
       this.loggedInUser =JSON.parse(localStorage.getItem('user') || '{}')
       this.userId = this.loggedInUser._id
     }
+    
       this.authService.getProfile(this.userId).subscribe(
         (data) => {
           this.user = data.user
