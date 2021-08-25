@@ -6,5 +6,8 @@ const router = require('express').Router()
     router.post('/newblog',auth, blogCtrl.createNewBlog)
     router.get('/current/:id',auth, blogCtrl.getBlogById)
     router.put('/update',auth, blogCtrl.updateBlogById)
+    router.put('/like/:id',auth, blogCtrl.likeBlog)
+    router.put('/dislike/:id',auth, blogCtrl.disLikeBlog)
+    router.delete('/delete/:id',auth, blogCtrl.deleteBlogById)
 
 module.exports = router

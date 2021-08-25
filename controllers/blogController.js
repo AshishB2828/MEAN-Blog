@@ -21,6 +21,7 @@ const blogCtrl ={
             title,
             body,
             images,
+            uid:req.user._id,
             createdBy:req.user.username,  
         })
 
@@ -65,6 +66,90 @@ const blogCtrl ={
             
         } catch (error) {
         return res.status(500).send({success: false, message:error.message})   
+        }
+    },
+    deleteBlogById: async(req, res)=>{
+        if(!req.params.id)
+        return res.status(400).send({success: false, message:"id not provided"})
+        
+        try {
+            const isBlogExist = await Blog.findOne({_id:req.params.id})
+            if(!isBlogExist)
+            return res.status(203).send({success: false, message:"blog not found"})
+
+            if(req.user.username !== isBlogExist.createdBy)
+            return res.status(403).send({success: false, message:"your not allowed to do this operation"})
+
+            await Blog.findByIdAndDelete(req.params.id)
+            return res.status(200).send({success: true, message:"blog deleted"})
+            
+        } catch (error) {
+        return res.status(500).send({success: false, message:error.message})   
+        }
+    },
+    likeBlog:async(req, res)=>{
+        if(!req.params.id)
+        return res.status(400).send({success: false, message:"please provide a Id"})
+        const {id} = req.params
+        try {
+            const isBlogLiked = await Blog.findOne({_id: id, likedBy:req.user._id })
+            if(isBlogLiked) 
+            return res.status(400).send({success: false, message:"You already liked this blog"})
+
+            const isBlogDisLiked = await Blog.findOne({_id: id, DislikedBy:req.user._id })
+            if(isBlogDisLiked) 
+            {
+                const blog = await Blog.findOneAndUpdate({_id: id},
+                    {$pull:{DislikedBy:req.user._id}}
+                    ,{new:true}
+                    )
+                    if(!blog)
+                    return res.status(400).send({success: false, message:"blog doesnt exist"})
+            }
+        
+            const blog = await Blog.findOneAndUpdate({_id: id},
+                {$push:{likedBy:req.user._id}}
+                ,{new:true}
+                ) 
+
+            if(!blog) return res.status(400).send({success: false, message:"blog doesnt exist"})
+                return res.status(200).send({success: true, message:"liked", blog})
+
+
+        } catch (error) {
+            return res.status(500).send({success: false, message:error.message})
+        }
+    },
+    disLikeBlog:async(req, res)=>{
+        if(!req.params.id)
+        return res.status(400).send({success: false, message:"please provide a Id"})
+        const {id} = req.params
+        try {
+            const isBlogDisLiked = await Blog.findOne({_id: id, DislikedBy:req.user._id })
+            if(isBlogDisLiked) 
+            return res.status(400).send({success: false, message:"You already disliked this blog"})
+
+            const isBlogLiked = await Blog.findOne({_id: id, likedBy:req.user._id })
+            if(isBlogLiked) 
+            {
+                const blog = await Blog.findOneAndUpdate({_id: id},
+                    {$pull:{likedBy:req.user._id}}
+                    ,{new:true}
+                    )
+                    if(!blog)
+                    return res.status(400).send({success: false, message:"blog doesnt exist"})
+            }
+        
+            const blog = await Blog.findOneAndUpdate({_id: id},
+                {$push:{DislikedBy:req.user._id}}
+                ,{new:true}
+                ) 
+            if(!blog) return res.status(400).send({success: false, message:"blog doesnt exist"})
+                return res.status(200).send({success: true, message:"liked", blog})
+
+
+        } catch (error) {
+            return res.status(500).send({success: false, message:error.message})
         }
     }
 

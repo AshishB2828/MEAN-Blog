@@ -10,7 +10,8 @@ import { FlashMessagesService } from 'angular2-flash-messages';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-
+  userId: any;
+  loggedInUser: any;
   constructor(public authService: AuthService,
              private router: Router,
             private flashMessageService :FlashMessagesService) {
@@ -18,6 +19,8 @@ export class NavbarComponent implements OnInit {
              }
 
   ngOnInit(): void {
+    this.loggedInUser =JSON.parse(localStorage.getItem('user') || '{}')
+    this.userId = this.loggedInUser._id
   }
   onLogOut(){
     this.authService.logOut()

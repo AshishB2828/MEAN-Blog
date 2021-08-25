@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BlogComponent } from './components/blog/blog.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DeleteBlogComponent } from './components/delete-blog/delete-blog.component';
 import { EditBlogComponent } from './components/edit-blog/edit-blog.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
@@ -15,8 +16,9 @@ const routes: Routes = [
   {path:'dashboard', component: DashboardComponent, canActivate:[AuthGuard]},
   {path:'register', component: RegisterComponent, canActivate:[NoAuthGuard]},
   {path:'login', component: LoginComponent, canActivate:[NoAuthGuard]},
-  {path:'profile', component: ProfileComponent,canActivate:[AuthGuard]},
+  {path:'profile/:id', component: ProfileComponent,canActivate:[AuthGuard]},
   {path:'edit-blog/:id', component: EditBlogComponent,canActivate:[AuthGuard]},
+  {path:'delete-blog/:id', component: DeleteBlogComponent,canActivate:[AuthGuard]},
   {path:'blog', component: BlogComponent, canActivate:[]},
   {path:'**', component: HomeComponent},
 ];

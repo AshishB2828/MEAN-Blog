@@ -90,7 +90,7 @@ style="padding-top:5px !important;">
           {{blog?.body}}
         </div>
         <div class="panel-footer">
-            <p><strong>Posted By: </strong>{{blog?.createdBy}}</p>
+            <a [routerLink]="['/profile/',blog?.uid]"><strong>Posted By: </strong>{{blog?.createdBy}}</a>
             <p><strong>Date : </strong>{{blog?.createdAt | date:'MMM dd,yyyy'}}</p>
             <div *ngIf="blog.createdBy !== user.username">
                 <p><strong>Likes:</strong>{{blog?.likes}}</p>
@@ -107,25 +107,19 @@ style="padding-top:5px !important;">
             </button></a>
             
             <div class="dropdown">
-                <button type="button" name="button" class="btn btn-sm btn-success M-2">
-                    <i class="far fa-thumbs-up"></i> <span>Likes: 21</span>
+                <button type="button" name="button" class="btn btn-sm btn-success M-2" 
+                [disabled]="blog.likedBy.includes(user._id)"
+                (click)="likeBlog(blog._id)">
+                    <i class="far fa-thumbs-up"></i> <span>Likes: {{blog.likedBy.length}}</span>
                 </button>
-                <div class="dropdown-content">
-                    <a href="#">Ashish</a>
-                    <a href="#">Patel</a>
-                    <a href="#">Ram</a>
-                </div>
             </div>
 
             <div class="dropdown">
-                <button type="button" name="button" class="btn btn-sm btn-warning M-2">
-                    <i class="far fa-thumbs-down"></i>  <span>Dislikes: 21</span>
+                <button type="button" name="button" class="btn btn-sm btn-warning M-2" 
+                [disabled]="blog.DislikedBy.includes(user._id)"
+                (click)="dislikeBlog(blog._id)">
+                    <i class="far fa-thumbs-down"></i>  <span>Dislikes: {{blog.DislikedBy.length}}</span>
                 </button>
-                <div class="dropdown-content">
-                    <a href="#">Ashish</a>
-                    <a href="#">Patel</a>
-                    <a href="#">Ram</a>
-                </div>
             </div>
 
             <ul class="list-group">

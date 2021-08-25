@@ -28,4 +28,15 @@ export class BlogService {
   updateBlog(blog:BlogPost):Observable<any>{
     return this.http.put(`${this.domain}/blogs/update`, blog, {headers:this.auth.createAuthenticationHeader()})
   }
+  deleteBlog(id:any):Observable<any>{
+    return this.http.delete(`${this.domain}/blogs/delete/${id}`,{headers:this.auth.createAuthenticationHeader()})
+  }
+  likeBlog(id:any){
+    return this.http.put(`${this.domain}/blogs/like/${id}`,null, {headers:this.auth.createAuthenticationHeader()})
+
+  }
+  disLikeBlog(id:any){
+    return this.http.put(`${this.domain}/blogs/dislike/${id}`,null, {headers:this.auth.createAuthenticationHeader()})
+
+  }
 }

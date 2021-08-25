@@ -15,7 +15,8 @@ import { LoginComponent } from './components/login/login.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import {JwtModule, JwtHelperService} from '@auth0/angular-jwt';
 import { BlogComponent } from './components/blog/blog.component';
-import { EditBlogComponent } from './components/edit-blog/edit-blog.component'
+import { EditBlogComponent } from './components/edit-blog/edit-blog.component';
+import { DeleteBlogComponent } from './components/delete-blog/delete-blog.component'
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { EditBlogComponent } from './components/edit-blog/edit-blog.component'
     LoginComponent,
     ProfileComponent,
     BlogComponent,
-    EditBlogComponent
+    EditBlogComponent,
+    DeleteBlogComponent
   ],
   imports: [
     BrowserModule,

@@ -50,8 +50,8 @@ export class AuthService {
     return this.http.post(`${this.domain}/auth/login`, user)
   }
 
-  getProfile():Observable<any>{
-   return this.http.get(`${this.domain}/user/profile`, {headers: this.createAuthenticationHeader()})
+  getProfile(id:any):Observable<any>{
+   return this.http.get(`${this.domain}/user/profile/${id}`, {headers: this.createAuthenticationHeader()})
   }
   logOut(){
     this.authToken =null

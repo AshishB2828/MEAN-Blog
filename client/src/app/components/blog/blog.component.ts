@@ -24,7 +24,7 @@ export class BlogComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,private blogService:BlogService,private authService:AuthService) { 
     this.form = this.formBuilder.group({
-      title:['',[Validators.required, this.alphaNumericValidation]],
+      title:['',[Validators.required]],
       body:['',[Validators.required]],
       images:''
 
@@ -90,7 +90,22 @@ export class BlogComponent implements OnInit {
       error=>console.log(error)
     )
   }
-
+  likeBlog(id:any){
+    this.blogService.likeBlog(id).subscribe(data=>{
+      this.getAllBlogs()
+    },
+    error=>{
+      console.log(error)
+    })
+  }
+  dislikeBlog(id:any){
+    this.blogService.disLikeBlog(id).subscribe(data=>{
+      this.getAllBlogs()
+    },
+    error=>{
+      console.log(error)
+    })
+  }
   createComment(){
     
   }

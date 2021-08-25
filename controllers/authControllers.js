@@ -74,11 +74,13 @@ const authCtrl ={
     }
     ,userLogin: async(req, res) =>{
         const {username, password} = req.body
+        console.log(username)
         if(!username || !password)
         return res.send({success:false, message:"please provide a valid username and password"})
 
         try{
             const user = await User.findOne({username: username.toLowerCase()})
+            console.log(user)
             if(!user) return res.send({success:false, message:"user not found"})
 
             const isMatch = await bcrypt.compare(password, user.password)
@@ -87,7 +89,7 @@ const authCtrl ={
             
             const jwtToken = jwt.sign({userId:user._id},config.JwtSecret, {expiresIn: '24h'})
 
-            res.status(200).send({success:true, token:jwtToken,user:{username:user.username} ,message:"Loged in"})
+            res.status(200).send({success:true, token:jwtToken,user:{username:user.username, _id:user._id} ,message:"Loged in"})
 
         }catch(error) {
             res.status(500).send({message:error.message})
