@@ -151,6 +151,24 @@ const blogCtrl ={
         } catch (error) {
             return res.status(500).send({success: false, message:error.message})
         }
+    },
+    createComment:async(req, res)=>{
+        if(!req.body._id)
+        return res.status(400).send({success: false, message:"no comment provided"});
+        try {
+            const comment = {comment:req.body.comment, commentator:req.user.username}
+            const blog = await Blog.findOne({_id:req.body._id})
+          
+            if(!blog)
+            return res.status(400).send({success: false, message:"no comment provided"});
+
+            await Blog.findOneAndUpdate({_id:req.body._id},{$push:{comments:comment}},{new:true})
+
+            return res.status(200).send({success: true, message:"comment"})
+            
+        } catch (error) {
+            return res.status(400).send({success: false, message:error.message})
+        }
     }
 
 }

@@ -10,5 +10,5 @@ export class BlogPost{
         DislikedBy:Array<any>=[]
         likes:number=0
         Dislikes:number=0
-        comments= { comment:'', commentator:'' }
+        comments= [{ comment:'', commentator:'' }]
 }

@@ -1,4 +1,4 @@
-<div class="page-header">Blog Feed</div>
+<h1 class="page-header">Blog Feed</h1>
 
 <div class="row show-hide-message">
     <div [ngClass]="messageClass" *ngIf="message && newPost">
@@ -124,15 +124,38 @@ style="padding-top:5px !important;">
 
             <ul class="list-group">
                 <li class="list-group-item">
-                    <button type="button" name="button" class="btn btn-sm btn-info M-2" (click)="createComment()">
+                    <button type="button" name="button" class="btn btn-sm btn-info M-2" 
+                    [disabled]="newComment.indexOf(blog._id)>-1"
+                    (click)="draftComment(blog._id)">
                         Post Comment
                     </button>
                     <br/>
-                    <!-- <form >
-                        <textarea name="comment" id="" cols="30" rows="10" class="form-control"></textarea>
-                        <button type="submit" name="button" class="btn btn-sm btn-info M-2">Submit Post</button>
-                        <button type="submit" name="button" class="btn btn-sm btn-danger">cancel</button>
-                    </form> -->
+                   <div *ngIf="newComment.indexOf(blog._id)>-1">
+                    <form >
+                        
+                        <textarea name="comment" id="" cols="30" rows="10" class="form-control" [(ngModel)]="comment"></textarea>
+                        <button [disabled]="comment.length === 0 || processing" (click)="createComment(blog._id)"
+                        type="submit" name="button" class="btn btn-sm btn-info M-2">Submit</button>
+                        <button [disabled]="processing" type="submit" name="button" 
+                        class="btn btn-sm btn-danger" (click)="cancelComment(blog._id)">cancel</button>
+                    </form>
+                   </div>
+                   <div 
+                   *ngIf="enabledComments.indexOf(blog._id)===-1 && blog.comments.length>0"
+                   class="list-group-item">
+                        <span (click)="expandComments(blog._id)" style="cursor:pointer;">Show Comments&nbsp;&nbsp;</span>
+                   </div>
+                   <div 
+                   *ngIf="enabledComments.indexOf(blog._id)>-1 && blog.comments.length>0"
+                   class="list-group-item">
+                        <span (click)="collapseComments(blog._id)" style="cursor:pointer;">Hide Comments&nbsp;&nbsp;</span>
+                   </div>
+                   <div 
+                   *ngIf="enabledComments.indexOf(blog._id)>-1">
+                    <li *ngFor="let comment of blog.comments" class="list-group-item">
+                        <strong>{{comment.commentator}}: </strong> {{comment.comment}}
+                    </li>
+                   </div>
                 </li>
             </ul>
         </div>

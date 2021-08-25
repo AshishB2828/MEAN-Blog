@@ -11,7 +11,7 @@ const blogSchema = new mongoose.Schema({
     DislikedBy: Array,
     likes:{type:Number, default:0},
     Dislikes:{type:Number, default:0},
-    comments: { comment:{type: String}, commentator:{type:String} },
+    comments: [{ comment:{type: String}, commentator:{type:String} }],
 }, {
     timestamps: true
 })

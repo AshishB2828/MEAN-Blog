@@ -20,7 +20,10 @@ export class BlogComponent implements OnInit {
   processing:boolean =false
   images:[]=[]
   blogPosts:Array<BlogPost> = []
-  user:any
+  user:any=[]
+  newComment:any=[]
+  comment:any=""
+  enabledComments:any=[]
 
   constructor(private formBuilder: FormBuilder,private blogService:BlogService,private authService:AuthService) { 
     this.form = this.formBuilder.group({
@@ -106,8 +109,36 @@ export class BlogComponent implements OnInit {
       console.log(error)
     })
   }
-  createComment(){
-    
+  createComment(id:any){
+    console.log(id)
+    this.processing =true
+    this.blogService.postComment(id, this.comment).subscribe(
+      data=>{
+      this.getAllBlogs()
+      const index =this.newComment.indexOf(id)
+      this.newComment.splice(index,1)
+      this.comment=""
+      this.processing =false;
+      if(this.enabledComments.indexOf(id)<0)
+      this.expandComments(id)
+    })
+  }
+
+  draftComment(id:any){
+    this.newComment = []
+    this.newComment.push(id)
+  }
+
+  expandComments(id:any){
+    this.enabledComments.push(id)
+  }
+  cancelComment(id:any){
+    this.newComment=this.newComment.filter((i:any) => id!==i)
+    this.comment =""
+  }
+
+  collapseComments(id:any){
+    this.enabledComments = this.enabledComments.filter((i:any) =>id!==i)
   }
 
   enableForm(){

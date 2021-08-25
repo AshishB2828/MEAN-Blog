@@ -30,7 +30,7 @@ export class DeleteBlogComponent implements OnInit {
           this.messageClass ="alert alert-danger"
         }else{
           this.message = data.message
-          this.messageClass ="alert alert-succes"
+          this.messageClass ="alert alert-success"
           setTimeout(() =>{
             this.router.navigate(['/blog'])
           },2000)
